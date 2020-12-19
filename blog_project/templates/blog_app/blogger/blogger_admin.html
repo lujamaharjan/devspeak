@@ -1,0 +1,40 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block content %}
+    
+    <div style="width:95%; margin:auto; padding: auto">
+        <div class="row">
+            <div class="col-md-3 bg-secondary">
+                <ul style="list-style-type: none;">
+                    <li><a href="{% url 'blog_app:profile'%}">Profile</a></li>
+                    <li><a href="{% url 'blog_app:myblog'%}">MyBlogs</a></li>
+                </ul>
+                
+            </div>
+            <div class="col-md-9">
+                <h4>{{request.user}}</h4>
+                <img src="{{request.user.profile_pic.url}}">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <td><h5>Name</h5></td>
+                        <td><h5>{{request.user.first_name}} {{request.user.last_name}}</h5></td>
+                    </tr>
+                    <tr>
+                        <td><h5>Email</h5></td>
+                        <td><h5>{{request.user.email}}</h5></td>
+                    </tr>
+                    <tr>
+                        <td><h5>Phone</h5></td>
+                        <td><h5>{{request.user.phone}}</h5></td>
+                    </tr>
+                    <tr>
+                        <td><h5>Profession</h5></td>
+                        <td><h5>{{request.user.profession}}</h5></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

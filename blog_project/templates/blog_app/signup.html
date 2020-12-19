@@ -1,0 +1,14 @@
+{% extends 'blog_app/base.html' %}
+
+
+{% block content %}
+    <div class="card col-md-6 mx-auto my-4">
+        <h3>Sign up Form</h3>
+        <form method="post"> 
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class="btn btn-success mt-3">Signup</button>
+        </form>
+    </div>
+{% endblock content %}
+    

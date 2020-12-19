@@ -1,0 +1,46 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <a class="navbar-brand pr-2" href="#">
+      <img src="{% static 'logo.PNG'%}" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Blogs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact us</a>
+        </li>
+        
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <p class="nav-link">Welcome {{request.user}}</p>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog_app:profile' %}">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog_app:logout' %}">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog_app:signup' %}">SignUp</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{%url 'blog_app:login'%}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
