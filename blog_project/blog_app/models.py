@@ -7,7 +7,8 @@ class User(AbstractUser):
     profession = models.CharField(max_length=100)
     bio = models.TextField(null=True, blank=True)
     
-
+    def __str__(self):
+        return self.username
 
 class Blog(models.Model):
     title = models.CharField( max_length=50)
@@ -16,6 +17,10 @@ class Blog(models.Model):
     blogger = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField( auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    views = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
@@ -26,6 +31,7 @@ class Comment(models.Model):
 class Like(models.Model):
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     blogger = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
 
     

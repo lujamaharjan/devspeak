@@ -1,0 +1,91 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <div class="container">
+        <h2>{{blog.title}}</h2>
+        <img src="{{blog.feature_image.url}}" style="width:100%; margin-bottom: 30px;">
+        {{blog.body | safe}}
+        <p><span style="font-weight: bold;">Writer: </span><span>{{blog.blogger}}</span></p>
+        <p><span style="font-weight: bold;">Created_at:</span> <span>{{blog.created_at}}</span></p>
+        <p><span style="font-weight: bold;"> Updated_at: </span><span>{{blog.updated_at}}</span></p>
+        <p>
+            <a href="{%url 'blog_app:blog_like' blog.id %}" style="color:{{color}}"><i class="fa fa-thumbs-up"></i> : {{likes}} 
+            {% if color == "black" %}
+                Like
+            {% else %}
+                Unlike
+            {% endif %}
+                </a>
+            <spann style="margin-left:40%"><i class="fa fa-eye"></i> : {{blog.views}}</spann>
+            <span id="comment" style="float: right; cursor: pointer">Comment</span></p>
+            
+            {% if request.user.is_authenticated %}
+            <form method="POST" id="form" style="display: none" action="{% url 'blog_app:create_comment_view' blog.id %}" >
+                {% csrf_token %}
+                <input type="text" name="comment" />
+                <button>Submit</button>
+            </form>
+            {% else %}
+            <p>Please login to comment</p>
+            {% endif %}
+
+            
+            {% for comment in comments %}
+               <p>
+                   {{comment.blogger}} : {{comment.content}} 
+                    {% if request.user.id  == comment.blogger.id %} 
+                    <span id="edit" style="cursor:pointer">Edit</span> 
+                    <a href="{% url 'blog_app:delete_comment' comment.id%}">Delete</a>
+                    <form method="POST" id="edit_form" style="display: none" action="{% url 'blog_app:edit_comment' comment.id %}" >
+                        {% csrf_token %}
+                        <input type="text" name="comment" />
+                        <button>Submit</button>
+                    </form>
+                    {% endif %} 
+                </p> 
+            {% endfor %}
+                
+                
+            
+    </div>
+    <script>
+        var hide = true;
+        var x = document.getElementById('comment')
+        var y = document.getElementById('form')
+        x.addEventListener(
+            'click', function(){
+                console.log("clicked")
+                hide = !hide;
+                if(hide){
+                    y.style.display = 'none'
+                }
+                else{
+                    y.style.display = 'block'
+                }
+            }
+        )
+
+        var hide_edit = true;
+        var xx = document.getElementById('edit')
+        var yx = document.getElementById('edit_form')
+        xx.addEventListener(
+            'click', function(){
+                console.log("clicked")
+                hide_edit = !hide_edit;
+                if(hide_edit){
+                    yx.style.display = 'none'
+                }
+                else{
+                    yx.style.display = 'block'
+                }
+            }
+        )
+
+
+
+    </script>
+    
+{% endblock content %}
+    

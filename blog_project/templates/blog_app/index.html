@@ -27,23 +27,15 @@
      </div>
     <div class="container-fluid latest">
         <h2>Latest Posts</h2>
-        <div class='row'>
-            <div class="col-md-3">
-                <img src="{% static 'blog1.jpg' %}" alt="">
-                <h3>Lets code and have a fun!</h3>
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'blog2.jpg' %}" alt="">
-                <h3>Lets code and have a fun!</h3>
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'blog3.jpg' %}" alt="">
-                <h3>Lets code and have a fun!</h3>
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'blog4.jpg' %}" alt="">
-                <h3>Lets code and have a fun!</h3>
-            </div>
+        <div class="row">
+                {% for blog in latest_blogs  %}
+                <div class="col-md-3">
+                    <a href="{% url 'blog_app:blog_detail' blog.id %}">
+                        <img src="{{blog.feature_image.url}}" alt=""> 
+                        <h3>{{blog.title}}</h3>
+                    </a>
+                </div>
+                {% endfor %}
         </div>
      </div>
      <div class="container-fluid popular">

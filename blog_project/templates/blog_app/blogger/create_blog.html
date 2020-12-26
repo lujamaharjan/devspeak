@@ -1,0 +1,30 @@
+{% extends 'blog_app/base.html' %}
+{% load static %}
+
+{% block content %}
+    <script src="{% static 'ckeditor/ckeditor.js'%}"></script>
+    <div style="width:95%; margin:auto; padding: auto">
+        <div class="row my-4">
+            <div class="col-md-3 bg-secondary">
+                <ul style="list-style-type: none;">
+                    <li><a  style="color: white;"href="{% url 'blog_app:profile'%}">Profile</a></li>
+                    <li><a style="color: white;" href="{% url 'blog_app:myblogs'%}">MyBlogs</a></li>
+                </ul>
+                
+            </div>
+            <div class="col-md-9">
+                <h2>Create and publish new blog</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form}}
+                    <br>
+                    <button type="submit" class="btn btn-success">Publish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
+{% endblock content %}
+    

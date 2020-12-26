@@ -32,11 +32,24 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=128,widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
 
-
-
-
 class BlogForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ['title', 'body', 'feature_image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class':'form-control'}),
+            'body': forms.Textarea(attrs= { 'class': 'form-control', 'id':"editor1"}),
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content':forms.TextInput(attrs={'class':'form-control'})
+        }
+    
+
+
+     
 

@@ -4,26 +4,43 @@
 {% block content %}
     
     <div style="width:95%; margin:auto; padding: auto">
-        <div class="row">
+        <div class="row my-4">
             <div class="col-md-3 bg-secondary">
                 <ul style="list-style-type: none;">
-                    <li><a href="{% url 'blog_app:profile'%}">Profile</a></li>
-                    <li><a href="{% url 'blog_app:myblog'%}">MyBlogs</a></li>
+                    <li><a  style="color: white;"href="{% url 'blog_app:profile'%}">Profile</a></li>
+                    <li><a style="color: white;" href="{% url 'blog_app:myblogs'%}">MyBlogs</a></li>
                 </ul>
                 
             </div>
             <div class="col-md-9">
-                <h4>{{request.user}}</h4>
-                <img src="{{request.user.profile_pic.url}}">
+                <h1>MyBlogs<a href="{% url 'blog_app:create_blog' %}"><span style="float:right; font-size: 16px;" class="btn btn-danger">+Write New</span></a></h1>
                 <table class="table table-bordred table-striped">
                     
                     {% for blog in request.user.blog_set.all %}
-                        <tr><th>{{blog.title}}</th></tr>
+                        <tr>
+                            <th>{{blog.title}}</th>
+                            <th>
+                                <form method="POST" action="{% url 'blog_app:blog_delete' blog.id%}">
+                                    {% csrf_token %}
+                                    <button type="submit"  class="btn btn-danger" onclick="delete_blog(event)">Delete</button>
+                                </form>
+                            </th>
+                            <th><a href="{% url 'blog_app:update_blog' blog.id%}">Update</a></th>
+                        </tr>
                     {% endfor %}
                         
                 </table>
             </div>
         </div>
     </div>
+    <script>
+        const delete_blog = e =>{
+            e.preventDefault();
+            const x = confirm("Are you sure?")
+            if(x){
+                e.target.form.submit();
+            }
+        }
+    </script>
 {% endblock content %}
     
